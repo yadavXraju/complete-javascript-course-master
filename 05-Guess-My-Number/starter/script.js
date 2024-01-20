@@ -1,7 +1,9 @@
 'use strict';
 
 
-
+ const messageFunction = function(message){
+    document.querySelector('.message').textContent = message;
+ }
 
 //  document.querySelector('.check').addEventListener('click',function(){
 //     const doc =  document.querySelector('.guess').value;
@@ -24,10 +26,10 @@ document.querySelector('.check').addEventListener('click',function(){
     console.log(guess, typeof guess);
     
     if(!guess){
-        document.querySelector('.message').textContent = '⛔ No Number!';
+        messageFunction('⛔ No Number!');
 
     }else if(guess===number){
-         document.querySelector('.message').textContent = '🎉Correct Guess';
+         messageFunction('🎉Correct Guess');
          document.querySelector('body').style.backgroundColor = '#60b347'
          document.querySelector('.number').style.width = '30rem'
          document.querySelector('.number').textContent = number
@@ -35,27 +37,27 @@ document.querySelector('.check').addEventListener('click',function(){
             highScore = score;
             document.querySelector('.highscore').textContent = highScore
          }
-    }else if(guess<number){
+    }else if(guess !== number){
         if(score>1){
-            document.querySelector('.message').textContent = '〽👀 Too Low'
+            messageFunction(guess>number ? '〽👀 Too high':'〽👀 Too Low');
             score--;
 
         }
         document.querySelector('.score').textContent = score;
-    }else if(guess>number){
-        if(score>1){
-
-            document.querySelector('.message').textContent = '⚡Too high'
-            score--;
-            document.querySelector('.score').textContent = score;
+        if(score > highScore){
+            highScore = score;
+            document.querySelector('.highscore').textContent = highScore;
         }
+
     }
+    
+    
 
 
     document.querySelector('.again').addEventListener('click',function(){
        document.querySelector('.guess').value = '';
        document.querySelector('body').style.backgroundColor ='#222';
-       document.querySelector('.message').textContent = 'Start guessing...';
+       messageFunction('Start guessing...');
        document.querySelector('.score').textContent = 20;
        document.querySelector('.number').style.width = '15rem'
     })
